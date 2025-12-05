@@ -15,7 +15,7 @@ public class Portfolio {
         return stocks.size();
     }
 
-    public double getPotfolioReturn(){
+    public double getPortfolioReturn(){
         if(size() == 0)return 0.0;
 
         double pofolioReturn = 0.0;
