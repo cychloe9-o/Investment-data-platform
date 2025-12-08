@@ -41,4 +41,10 @@ public class Portfolio {
     public ArrayList<Stock>getStocks(){
         return stocks;
     }
+
+    public void printStocks(){
+        for (Stock s: stocks){
+            System.out.println(s.getSymbol() + " return = "+ s.getReturn());
+        }
+    }
 }
