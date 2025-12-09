@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+
+//only works for stock now
 public class Portfolio {
     private ArrayList<Stock> stocks;
     private ArrayList<Double> weights;
@@ -16,6 +18,10 @@ public class Portfolio {
     }
 
     public void addStock(Stock stock, double weight){
+        if (weight < 0) {
+            throw new IllegalArgumentException("Weight cannot be negative");
+        }
+
         stocks.add(stock);
         weights.add(weight);
     } 

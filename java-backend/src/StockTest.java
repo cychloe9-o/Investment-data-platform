@@ -1,16 +1,22 @@
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 public class StockTest {
     public static void main(String[] args) {
-        ArrayList<Double> prices = new ArrayList<>();
-        prices.add(100.0);
-        prices.add(105.0);
-        prices.add(108.0);
 
+        DecimalFormat pct = new DecimalFormat("0.00%");
+        DecimalFormat dec4 = new DecimalFormat("0.0000");
 
-        Stock apple = new Stock("AAPL", prices);
+        Stock s = new Stock("AAPL", new double[]{100, 105, 102, 108, 103});
 
-        System.out.println("Symbol: " + apple.getSymbol());
-        System.out.println("Return: " + (apple.getReturn() * 100) + "%");
+        System.out.println("==== Stock Metrics ====");
+        System.out.println("Symbol: " + s.getSymbol());
+        System.out.println("Return: " + pct.format(s.getReturn()));
+        System.out.println("Volatility: " + pct.format(s.getVolatility()));
+        System.out.println("Max Drawdown: " + pct.format(s.getMaxDrawdown()));
+
+        System.out.println("\nLog Returns:");
+        for (double r : s.getLogReturns()) {
+            System.out.println("  " + dec4.format(r));
+        }
     }
 }
