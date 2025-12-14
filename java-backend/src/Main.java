@@ -1,16 +1,27 @@
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Java backend placeholder");
-        Asset a1 = new Stock("AAPL", new double[]{100,105,110});
-        Asset a2 = new CryptoCurrency("BTC", 67000, 0.75);
+        try{
+            ArrayList<Double> prices = CSVReader.readPrices("AAPL.csv");
 
-        System.out.println(a1.getType());
-        System.out.println(a2.getType());
+        Asset aapl = new Stock("AAPL", prices);
 
-        System.out.println(a1.getReturn());
-        System.out.println(a2.getReturn());
+        System.out.println("Return = " + ((ReturnCalculable) aapl).getReturn());
+        System.out.println("Volatility = " + ((VolatilityCalculable) aapl).getVolatility());
+        }catch(Exception e){
+            System.err.println("System error: " + e.getMessage());
+        }     
 
-        Asset e = new ETF("QQQ", new double[]{300, 310, 320});
-        System.out.println(e.getReturn());
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        ArrayList<Double> prices = CSVReader.readPrices("AAPL.csv");
+
+        Asset aapl = new Stock("AAPL", prices);
+        executor.submit(new ReturnTask(aapl));
+
+        executor.shutdown();
+
     }
 }

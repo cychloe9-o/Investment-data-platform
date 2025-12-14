@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Stock extends Asset implements ReturnCalculable{
+public class Stock extends Asset implements ReturnCalculable, VolatilityCalculable, Reportable{
     private String symbol;
     private ArrayList<Double> prices;
     private double simpleReturn;
@@ -9,6 +9,10 @@ public class Stock extends Asset implements ReturnCalculable{
     private double maxDrawdown;
 
     public Stock(String symbol, ArrayList<Double> prices) {
+        if (prices == null || prices.isEmpty()) {
+        throw new IllegalArgumentException("Price list cannot be empty");
+        }
+
         super(symbol, prices.get(prices.size() - 1));
         this.symbol = symbol;
         this.prices = prices;
@@ -16,6 +20,10 @@ public class Stock extends Asset implements ReturnCalculable{
     }
 
     public Stock(String symbol, double[] priceArray) {
+        if (priceArray == null || priceArray.length == 0) {
+            throw new IllegalArgumentException("Price list cannot be empty");
+        }
+
         super(symbol, priceArray[priceArray.length - 1]);
         this.symbol = symbol;
         this.prices = new ArrayList<>();
@@ -85,11 +93,19 @@ public class Stock extends Asset implements ReturnCalculable{
     public String getSymbol() { return symbol; }
     
     public ArrayList<Double> getLogReturns() { return logReturns; }
-    public double getVolatility() { return volatility; }
+    
     public double getMaxDrawdown() { return maxDrawdown; }
 
     @Override
     public String getType() {return "Stock";}
     @Override
     public double getReturn() { return simpleReturn; }
+    @Override
+    public double getVolatility() { return volatility; }
+    @Override
+    public String generateReport() {
+        return "Stock " + symbol +
+               " | Return: " + simpleReturn +
+               " | Volatility: " + volatility;
+    }
 }
