@@ -26,20 +26,6 @@ public class Stock extends Asset implements ReturnCalculable, VolatilityCalculab
         }
         calculateAll();
     }
-    
-    private static double lastPrice(ArrayList<Double> prices) {
-        if (prices == null || prices.isEmpty()) {
-            throw new IllegalArgumentException("Price list cannot be empty");
-        }
-        return prices.get(prices.size() - 1);
-    }
-
-    private static double lastPrice(double[] priceArray) {
-        if (priceArray == null || priceArray.length == 0) {
-            throw new IllegalArgumentException("Price list cannot be empty");
-        }
-        return priceArray[priceArray.length - 1];
-    }
 
     private void calculateAll() {
         calculateSimpleReturn();
