@@ -9,10 +9,7 @@ public class Stock extends Asset implements ReturnCalculable, VolatilityCalculab
     private double maxDrawdown;
 
     public Stock(String symbol, ArrayList<Double> prices) {
-        if (prices == null || prices.isEmpty()) {
-        throw new IllegalArgumentException("Price list cannot be empty");
-        }
-
+        
         super(symbol, prices.get(prices.size() - 1));
         this.symbol = symbol;
         this.prices = prices;
@@ -20,10 +17,7 @@ public class Stock extends Asset implements ReturnCalculable, VolatilityCalculab
     }
 
     public Stock(String symbol, double[] priceArray) {
-        if (priceArray == null || priceArray.length == 0) {
-            throw new IllegalArgumentException("Price list cannot be empty");
-        }
-
+        
         super(symbol, priceArray[priceArray.length - 1]);
         this.symbol = symbol;
         this.prices = new ArrayList<>();
@@ -31,6 +25,20 @@ public class Stock extends Asset implements ReturnCalculable, VolatilityCalculab
             this.prices.add(p);
         }
         calculateAll();
+    }
+    
+    private static double lastPrice(ArrayList<Double> prices) {
+        if (prices == null || prices.isEmpty()) {
+            throw new IllegalArgumentException("Price list cannot be empty");
+        }
+        return prices.get(prices.size() - 1);
+    }
+
+    private static double lastPrice(double[] priceArray) {
+        if (priceArray == null || priceArray.length == 0) {
+            throw new IllegalArgumentException("Price list cannot be empty");
+        }
+        return priceArray[priceArray.length - 1];
     }
 
     private void calculateAll() {
