@@ -33,7 +33,10 @@ def main():
     print("\nRows:", len(df))
     print("Date range:", df["Date"].min(), "->", df["Date"].max())
 
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
     out = f"{symbol}_prices.csv"
+    
     df.to_csv(out, index=False)
     print(f"\nSaved to: {out}")
 
